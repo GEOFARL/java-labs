@@ -10,8 +10,10 @@ public class Main {
                 .withPromptMessage("Please enter an integer greater than 1: ")
                 .build();
 
-        int userInput = InputUtility.getInput(scanner, inputConfig);
+        int userInput = InputUtility.getInputProcedural(scanner, inputConfig);
+        System.out.println("You entered: " + userInput);
 
+        userInput = InputUtility.getInputFunctional(scanner, inputConfig);
         System.out.println("You entered: " + userInput);
     }
 }
