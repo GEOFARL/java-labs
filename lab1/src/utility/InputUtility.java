@@ -1,3 +1,7 @@
+package utility;
+
+import config.InputConfig;
+
 import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
