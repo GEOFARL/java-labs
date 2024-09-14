@@ -7,12 +7,12 @@ import java.util.Set;
 public class CliArgumentHandler {
     private final Map<String, String> namedArgs;
     private final Map<String, Boolean> flags;
-    private final Map<String, Set<String>> validOptions; // Map of argument keys to valid values
+    private final Map<String, Set<String>> validOptions;
 
-    public CliArgumentHandler(String[] args, Map<String, Set<String>> validOptions) {
+    public CliArgumentHandler(String[] args) {
+        this.validOptions = new HashMap<>();
         this.namedArgs = new HashMap<>();
         this.flags = new HashMap<>();
-        this.validOptions = validOptions;
         parseArguments(args);
     }
 
@@ -34,6 +34,15 @@ public class CliArgumentHandler {
                 namedArgs.put("positional_" + i, arg);
             }
         }
+    }
+
+    public void extendValidOptions(Map<String, Set<String>> additionalOptions) {
+        additionalOptions.forEach((key, newValues) ->
+                validOptions.merge(key, newValues, (existingValues, newValuesToAdd) -> {
+                    existingValues.addAll(newValuesToAdd);
+                    return existingValues;
+                })
+        );
     }
 
     public String getArgument(String key) {

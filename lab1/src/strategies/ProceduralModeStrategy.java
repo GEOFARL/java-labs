@@ -6,13 +6,17 @@ import utility.InputUtility;
 import java.util.Scanner;
 
 public class ProceduralModeStrategy implements ModeStrategy {
-    @Override
-    public <T> T getInput(Scanner scanner, InputConfig<T> config) {
-        return InputUtility.getInputProcedural(scanner, config);
+    private final Scanner scanner;
+    private final InputConfig<Integer> config;
+
+    public ProceduralModeStrategy(Scanner scanner, InputConfig<Integer> config) {
+        this.scanner = scanner;
+        this.config = config;
     }
 
     @Override
-    public String getModeName() {
-        return "Procedural";
+    public void execute() {
+        Integer input = InputUtility.getInputProcedural(scanner, config);
+        System.out.println("Procedural mode: You entered " + input);
     }
 }
