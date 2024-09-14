@@ -25,27 +25,20 @@ public class InputUtility {
 
     public static <T> T getInputFunctional(Scanner scanner, InputConfig<T> config) {
         return Optional.ofNullable(promptForInput(scanner, config))
-                        .orElseGet(() -> retryInput(scanner, config));
+                .orElseGet(() -> getInputFunctional(scanner, config));
     }
 
     private static <T> T promptForInput(Scanner scanner, InputConfig<T> config) {
         System.out.print(config.getPromptMessage());
 
         try {
-            T input = config.getInputSupplier().get();
-            return config.getValidator().test(input) ? input : null;
+            return Optional.of(config.getInputSupplier().get())
+                    .filter(config.getValidator())
+                    .orElse(null);
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please try again.");
             scanner.next();
             return null;
         }
-    }
-
-    private static <T> T retryInput(Scanner scanner, InputConfig<T> config) {
-        T input;
-        do {
-            input = promptForInput(scanner, config);
-        } while (input == null);
-        return input;
     }
 }
