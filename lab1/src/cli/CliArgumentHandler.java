@@ -1,22 +1,26 @@
 package cli;
 
+import java.util.Set;
+
 public class CliArgumentHandler {
     private final String mode;
+    private final Set<String> validModes;
 
-    public CliArgumentHandler(String[] args) {
+    public CliArgumentHandler(String[] args, Set<String> validModes) {
+        this.validModes = validModes;
         this.mode = parseArguments(args);
     }
 
     private String parseArguments(String[] args) {
         if (args.length < 1) {
             System.out.println("Usage: java Main <mode>");
-            System.out.println("Modes: 'procedural' or 'functional'");
+            System.out.println("Valid modes: " + String.join(", ", validModes));
             return null;
         }
 
         String mode = args[0].toLowerCase();
-        if (!"procedural".equals(mode) && !"functional".equals(mode)) {
-            System.out.println("Invalid mode. Please use 'procedural' or 'functional'.");
+        if (!validModes.contains(mode)) {
+            System.out.println("Invalid mode. Please use one of the following: " + String.join(", ", validModes));
             return null;
         }
 

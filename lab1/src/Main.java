@@ -4,14 +4,16 @@ import strategies.ModeStrategy;
 import cli.ModeStrategyResolver;
 
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-       CliArgumentHandler argumentHandler = new CliArgumentHandler(args);
+        Set<String> validModes = Set.of("procedural", "functional");
+        CliArgumentHandler argumentHandler = new CliArgumentHandler(args, validModes);
 
-       if (!argumentHandler.isValid()) {
-           return;
-       }
+        if (!argumentHandler.isValid()) {
+            return;
+        }
 
         ModeStrategy strategy = ModeStrategyResolver.resolve(argumentHandler.getMode());
         Scanner scanner = new Scanner(System.in);
