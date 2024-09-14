@@ -3,19 +3,24 @@ import config.InputConfig;
 import strategies.ModeStrategy;
 import cli.ModeStrategyResolver;
 
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        Set<String> validModes = Set.of("procedural", "functional");
-        CliArgumentHandler argumentHandler = new CliArgumentHandler(args, validModes);
+        Map<String, Set<String>> validOptions = Map.of(
+                "mode", Set.of("procedural", "functional")
+        );
+        CliArgumentHandler argumentHandler = new CliArgumentHandler(args, validOptions);
 
-        if (!argumentHandler.isValid()) {
+        String mode = argumentHandler.getArgument("mode");
+        if (mode == null) {
+            System.out.println("Usage: --mode=procedural or --mode=functional");
             return;
         }
 
-        ModeStrategy strategy = ModeStrategyResolver.resolve(argumentHandler.getMode());
+        ModeStrategy strategy = ModeStrategyResolver.resolve(mode);
         Scanner scanner = new Scanner(System.in);
         InputConfig<Integer> inputConfig = new InputConfig.Builder<Integer>()
                 .withInputSupplier(scanner::nextInt)
