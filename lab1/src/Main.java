@@ -1,6 +1,6 @@
 import cli.CliArgumentHandler;
-import cli.ModeArgumentProcessor;
-import cli.ModeStrategyResolver;
+import cli.argumentProcessor.ModeArgumentProcessor;
+import strategies.ModeStrategyResolver;
 
 public class Main {
     public static void main(String[] args) {

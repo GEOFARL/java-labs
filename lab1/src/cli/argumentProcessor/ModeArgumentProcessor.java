@@ -1,9 +1,11 @@
-package cli;
+package cli.argumentProcessor;
+
+import cli.CliArgumentHandler;
 
 import java.util.Map;
 import java.util.Set;
 
-public class ModeArgumentProcessor implements ArgumentProcessor{
+public class ModeArgumentProcessor implements ArgumentProcessor {
     private final Set<String> validModes = Set.of("procedural", "functional");
     public static final String modeKey = "mode";
 

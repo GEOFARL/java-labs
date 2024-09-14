@@ -1,9 +1,8 @@
-package cli;
+package strategies;
 
+import cli.CliArgumentHandler;
+import cli.argumentProcessor.ModeArgumentProcessor;
 import config.InputConfig;
-import strategies.FunctionalModeStrategy;
-import strategies.ModeStrategy;
-import strategies.ProceduralModeStrategy;
 
 import java.util.Scanner;
 
