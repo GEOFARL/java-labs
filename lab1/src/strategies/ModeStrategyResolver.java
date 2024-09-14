@@ -15,7 +15,7 @@ public class ModeStrategyResolver {
         InputConfig<Integer> inputConfig = new InputConfig.Builder<Integer>()
                 .withInputSupplier(scanner::nextInt)
                 .withValidator(input -> input > 1)
-                .withPromptMessage("Please enter an integer greater than 1: ")
+                .withPromptMessage("Please enter the upper limit: ")
                 .build();
 
         return switch (mode.toLowerCase()) {

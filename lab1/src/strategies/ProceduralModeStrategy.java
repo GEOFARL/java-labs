@@ -1,8 +1,11 @@
 package strategies;
 
 import config.InputConfig;
+import utility.DivisorSumFinder;
 import utility.InputUtility;
+import utility.OutputHandler;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ProceduralModeStrategy implements ModeStrategy {
@@ -16,7 +19,14 @@ public class ProceduralModeStrategy implements ModeStrategy {
 
     @Override
     public void execute() {
-        Integer input = InputUtility.getInputProcedural(scanner, config);
-        System.out.println("Procedural mode: You entered " + input);
+        System.out.println("CURRENT MODE: PROCEDURAL\n");
+        Integer limit = InputUtility.getInputProcedural(scanner, config);
+        System.out.println("You entered: " + limit);
+
+        DivisorSumFinder finder = new DivisorSumFinder();
+        List<Integer> numbersWithDivisorSum = finder.findNumbersWithDivisorSumProcedural(limit);
+
+        OutputHandler outputHandler = new OutputHandler();
+        outputHandler.outputNumbersProcedural(numbersWithDivisorSum);
     }
 }
