@@ -1,18 +1,20 @@
 package geofarl;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import encryption.FileEncryptor;
+import frequency_count.TagFrequencyCounter;
 import tasks.TaskManager;
 
 public class App {
     private Scanner scanner = new Scanner(System.in);
     private TaskManager taskManager = new TaskManager();
     private FileEncryptor fileEncryptor = new FileEncryptor();
+    private TagFrequencyCounter tagCounter = new TagFrequencyCounter();
 
     public static void main(String[] args) {
         App app = new App();
@@ -37,7 +39,7 @@ public class App {
                 switch (choice) {
                     case 1:
                         System.out.println("Present working directory: " + System.getProperty("user.dir"));
-                        findLineWithMaxWords();
+                        findLineWithMaxWordsFromFilePath();
                         break;
                     case 2:
                         taskManager.addTask();
@@ -52,7 +54,7 @@ public class App {
                         fileEncryptor.encryptDecryptFile();
                         break;
                     case 6:
-                        System.out.println("Not implemented yet.");
+                        tagCounter.run();
                         break;
                     case 7:
                         System.exit(0);
@@ -66,14 +68,11 @@ public class App {
         }
     }
 
-    private void findLineWithMaxWords() {
-        try {
-            System.out.println("Enter the file path:");
-            String filePath = scanner.nextLine();
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String maxLine = "";
-            int maxWords = 0;
+    public String findLineWithMaxWords(BufferedReader reader) {
+        String maxLine = "";
+        int maxWords = 0;
 
+        try {
             String line;
             while ((line = reader.readLine()) != null) {
                 int wordCount = line.split("\\s+").length;
@@ -83,10 +82,21 @@ public class App {
                 }
             }
             reader.close();
-            System.out.println("Line with maximum words: " + maxLine);
-            System.out.println("Number of words: " + maxWords);
         } catch (IOException e) {
             System.out.println("An error occurred while reading the file: " + e.getMessage());
+        }
+        return maxLine;
+    }
+
+    public void findLineWithMaxWordsFromFilePath() {
+        try {
+            System.out.println("Enter the file path:");
+            String filePath = scanner.nextLine();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(filePath)));
+            String maxLine = findLineWithMaxWords(reader);
+            System.out.println("Line with maximum words: " + maxLine);
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
 }

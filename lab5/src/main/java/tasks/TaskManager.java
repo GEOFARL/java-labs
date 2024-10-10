@@ -1,17 +1,21 @@
 package tasks;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class TaskManager {
   private List<Task> tasks = new ArrayList<>();
-  private Scanner scanner = new Scanner(System.in);
+  private Scanner scanner;
+
+  public TaskManager() {
+    this.scanner = new Scanner(System.in);
+  }
+
+  public TaskManager(Scanner scanner) {
+    this.scanner = scanner;
+  }
 
   public void addTask() {
     try {
@@ -30,9 +34,13 @@ public class TaskManager {
   }
 
   public void saveTasksToFile() {
+    System.out.println("Enter the file path:");
+    String filePath = scanner.nextLine();
+    saveTasksToFile(filePath);
+  }
+
+  public void saveTasksToFile(String filePath) {
     try {
-      System.out.println("Enter the file path:");
-      String filePath = scanner.nextLine();
       try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath))) {
         out.writeObject(tasks);
       }
@@ -43,9 +51,13 @@ public class TaskManager {
   }
 
   public void loadTasksFromFile() {
+    System.out.println("Enter the file path:");
+    String filePath = scanner.nextLine();
+    loadTasksFromFile(filePath);
+  }
+
+  public void loadTasksFromFile(String filePath) {
     try {
-      System.out.println("Enter the file path:");
-      String filePath = scanner.nextLine();
       try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
         tasks = (List<Task>) in.readObject();
       }
@@ -54,5 +66,9 @@ public class TaskManager {
     } catch (Exception e) {
       System.out.println("An error occurred while loading tasks from file.");
     }
+  }
+
+  public List<Task> getTasks() {
+    return tasks;
   }
 }

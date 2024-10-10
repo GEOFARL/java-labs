@@ -11,6 +11,14 @@ public class Task implements Serializable {
     this.priority = priority;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public int getPriority() {
+    return priority;
+  }
+
   @Override
   public String toString() {
     return "Task{name='" + name + "', priority=" + priority + "}";

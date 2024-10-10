@@ -43,7 +43,7 @@ public class FileEncryptor {
     }
   }
 
-  private void processStream(InputStream in, OutputStream out, char key, boolean encrypt) throws IOException {
+  protected void processStream(InputStream in, OutputStream out, char key, boolean encrypt) throws IOException {
     try (BufferedInputStream bin = new BufferedInputStream(in);
         BufferedOutputStream bout = new BufferedOutputStream(out)) {
       int data;
